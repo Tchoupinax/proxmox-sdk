@@ -163,6 +163,25 @@ export class HttpProxmoxRepository {
     return (data as unknown as any)?.data?.data as string;
   }
 
+  async listTemplates (
+    payload: { node: string; }
+  ) {
+    let data;
+    try {
+      data = await axios({
+        method: "GET",
+        url: this.computeUrl(`/api2/json/cluster/resources`),
+        headers: await this.prepareHeaders(),
+      });
+    } catch (err) {
+      this.logger.error({ status: (err as unknown as any).response.status, ...payload, errors: (err as unknown as any).response.data.errors }, (err as unknown as any).response.statusText);
+    }
+
+    return (data as unknown as any)?.data?.data
+      // @ts-ignore
+      .filter(resource => resource.template === 1);
+  }
+
   async updateQemuMachine (payload: UpdateQemuMachinePayload): Promise<string> {
     let data;
 
