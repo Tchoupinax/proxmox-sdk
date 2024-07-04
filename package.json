@@ -1,0 +1,32 @@
+{
+  "name": "proxmox-sdk",
+  "version": "0.0.1",
+  "description": "Opiniated and abtracted Typescript SDK for Proxmox",
+  "author": "Tchoupinax <corentinfiloche@hotmail.fr> (https://corentinfiloche.xyz)",
+  "license": "MIT",
+  "keywords": [
+    "API",
+    "Proxmox",
+    "SDK"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Tchoupinax/proxmox-sdk"
+  },
+  "bugs": {
+    "url": "https://github.com/Tchoupinax/proxmox-sdk/issues"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@types/node": "20.14.9",
+    "typescript": "5.5.3"
+  },
+  "dependencies": {
+    "axios": "1.7.2",
+    "nestjs-pino": "4.1.0"
+  }
+}
