@@ -291,7 +291,7 @@ export class HttpProxmoxRepository {
     return (data as unknown as any)?.data?.data as string;
   }
 
-  async cloneQemuMarchine (payload: CloneQemuMachinePayload) {
+  async cloneQemuMachine (payload: CloneQemuMachinePayload) {
     let data;
     try {
       data = await axios({
