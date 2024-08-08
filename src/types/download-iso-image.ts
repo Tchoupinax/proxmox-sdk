@@ -20,4 +20,4 @@ export type DownloadIsoImagePayload = {
    * The URL to download the file from.
    */
   url: string;
-}
+};

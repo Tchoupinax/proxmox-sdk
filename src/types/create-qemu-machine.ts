@@ -48,7 +48,7 @@ type CreateQemuMachineBasePayload = {
    * It should be between 100 and 999999999.
    */
   vmid: number;
-}
+};
 
 export type CreateQemuMachinePayload = CreateQemuMachineBasePayload & {
   /**
@@ -75,7 +75,7 @@ export type CreateQemuMachinePayload = CreateQemuMachineBasePayload & {
    * Networks configurations
    */
   networks?: Array<QemuNetwork>;
-}
+};
 
 export type CreateQemuMachineProxmoxPayload = CreateQemuMachineBasePayload & {
   /**
@@ -101,7 +101,7 @@ export type CreateQemuMachineProxmoxPayload = CreateQemuMachineBasePayload & {
    * [gw=<GatewayIPv4>] [,gw6=<GatewayIPv6>] [,ip=<IPv4Format/CIDR>] [,ip6=<IPv6Format/CIDR>]
    */
   ipconfig0?: string;
-    /**
+  /**
    * cloud-init: Specify IP addresses and gateways for the corresponding interface.
    *
    * IP addresses use CIDR notation, gateways are optional but need an IP of the same type specified.
@@ -138,12 +138,25 @@ export type CreateQemuMachineProxmoxPayload = CreateQemuMachineBasePayload & {
   scsihw?: "virtio-scsi-single";
 
   sockets: number;
-}
+};
 
-export type OS = "other" | "wxp" | "w2k" | "w2k3" | "w2k8" | "wvista" | "win7" | "win8" | "win10" | "win11" | "l24" | "l26" | "solaris";
+export type OS =
+  | "other"
+  | "wxp"
+  | "w2k"
+  | "w2k3"
+  | "w2k8"
+  | "wvista"
+  | "win7"
+  | "win8"
+  | "win10"
+  | "win11"
+  | "l24"
+  | "l26"
+  | "solaris";
 
 export type QemuNetwork = {
   bridge: "vmbr0";
   firewall: boolean;
   model: "virtio";
-}
+};

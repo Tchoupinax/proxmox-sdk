@@ -1,7 +1,20 @@
-export type OS = "other" | "wxp" | "w2k" | "w2k3" | "w2k8" | "wvista" | "win7" | "win8" | "win10" | "win11" | "l24" | "l26" | "solaris";
+export type OS =
+  | "other"
+  | "wxp"
+  | "w2k"
+  | "w2k3"
+  | "w2k8"
+  | "wvista"
+  | "win7"
+  | "win8"
+  | "win10"
+  | "win11"
+  | "l24"
+  | "l26"
+  | "solaris";
 
 export type QemuNetwork = {
-  bridge: "vmbr0" |"vmbr1";
+  bridge: "vmbr0" | "vmbr1";
   /**
    * By default Proxmox set true
    */
@@ -11,7 +24,7 @@ export type QemuNetwork = {
    * If wanted, we can associated the machine to a VLAN
    */
   tag?: number;
-}
+};
 // PUT https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}/config
 type UpdateQemuMachineBasePayload = {
   /**
@@ -67,7 +80,7 @@ type UpdateQemuMachineBasePayload = {
    * It should be between 100 and 999999999.
    */
   vmid: number;
-}
+};
 
 export type UpdateQemuMachinePayload = UpdateQemuMachineBasePayload & {
   /**
@@ -106,7 +119,7 @@ export type UpdateQemuMachinePayload = UpdateQemuMachineBasePayload & {
    */
   overridenUser?: string;
   sshkey?: string;
-}
+};
 
 export type UpdateQemuMachineProxmoxPayload = UpdateQemuMachineBasePayload & {
   /**
@@ -202,4 +215,4 @@ export type UpdateQemuMachineProxmoxPayload = UpdateQemuMachineBasePayload & {
    * cloud-init: Setup public SSH keys (one key per line, OpenSSH format).
    */
   sshkeys?: string;
-}
+};

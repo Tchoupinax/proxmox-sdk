@@ -23,4 +23,4 @@ export type DeleteQemuMachinePayload = {
    * It should be between 100 and 999999999.
    */
   vmid: number;
-}
+};
