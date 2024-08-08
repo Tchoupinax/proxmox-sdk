@@ -3,4 +3,4 @@ export type CloneQemuMachinePayload = {
   newid: number;
   node: string;
   vmid: number;
-}
+};

@@ -1,2 +1,2 @@
-export { HttpProxmoxRepository } from './src/http-proxmox.repository'
-export * from './src/types'
+export { HttpProxmoxRepository } from "./src/http-proxmox.repository";
+export * from "./src/types";

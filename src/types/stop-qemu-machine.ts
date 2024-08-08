@@ -2,4 +2,4 @@
 export type StopQemuMachinePayload = {
   node: string;
   vmid: number;
-}
+};

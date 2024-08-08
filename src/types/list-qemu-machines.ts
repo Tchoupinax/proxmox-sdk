@@ -1,6 +1,5 @@
 // https://pve.proxmox.com/pve-docs/api-viewer/#/nodes/{node}/qemu/{vmid}
-export type ListQemuMachinesPayload = {
-}
+export type ListQemuMachinesPayload = {};
 
 export type QemuMachine = {
   /**
@@ -35,5 +34,5 @@ export type QemuMachine = {
    * The (unique) ID of the VM.
    */
   vmid: number;
-}
+};
 export type ListQemuMachinesAnswer = Array<QemuMachine>;

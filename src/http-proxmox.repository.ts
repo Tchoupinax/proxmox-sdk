@@ -3,13 +3,19 @@ import { Logger } from "nestjs-pino";
 
 import { encodeSSHKey } from "./tools/encode-ssh-key";
 import { CloneQemuMachinePayload } from "./types/clone-qemu-machine";
-import { CreateQemuMachinePayload, CreateQemuMachineProxmoxPayload } from "./types/create-qemu-machine";
+import {
+  CreateQemuMachinePayload,
+  CreateQemuMachineProxmoxPayload,
+} from "./types/create-qemu-machine";
 import { DeleteQemuMachinePayload } from "./types/delete-qemu-machine";
 import { DownloadIsoImagePayload } from "./types/download-iso-image";
 import { ListQemuMachinesAnswer } from "./types/list-qemu-machines";
 import { StartQemuMachinePayload } from "./types/start-qemu-machine";
 import { StopQemuMachinePayload } from "./types/stop-qemu-machine";
-import { UpdateQemuMachinePayload, UpdateQemuMachineProxmoxPayload } from "./types/update-qemu-machine";
+import {
+  UpdateQemuMachinePayload,
+  UpdateQemuMachineProxmoxPayload,
+} from "./types/update-qemu-machine";
 import { IP } from "./types/ip";
 import { UPID } from "./types";
 
@@ -17,19 +23,19 @@ export type AuthConfig = {
   host: string;
   password: string;
   username: string;
-}
+};
 
 // authorize self signed cert if you do not use a valid SSL certificat
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 // https://pve.proxmox.com/wiki/Proxmox_VE_API#Authentication
 export class HttpProxmoxRepository {
-  constructor (
+  constructor(
     private readonly parameters: AuthConfig,
     private readonly logger: Logger,
   ) {}
 
-  async getProxmoxVersion (): Promise<string> {
+  async getProxmoxVersion(): Promise<string> {
     let data;
     try {
       data = await axios({
@@ -43,7 +49,7 @@ export class HttpProxmoxRepository {
     return (data as unknown as any).data.data.version;
   }
 
-  async listQemuMachines (node: string): Promise<ListQemuMachinesAnswer> {
+  async listQemuMachines(node: string): Promise<ListQemuMachinesAnswer> {
     let data;
     try {
       data = await axios({
@@ -57,7 +63,7 @@ export class HttpProxmoxRepository {
     return (data as unknown as any).data.data;
   }
 
-  async getQemuMachineVlanTag (node: string, vmid: number): Promise<number> {
+  async getQemuMachineVlanTag(node: string, vmid: number): Promise<number> {
     let data;
     try {
       data = await axios({
@@ -69,7 +75,9 @@ export class HttpProxmoxRepository {
       return 1;
     }
 
-    const tag = data.data.data.net0.split(",").find((e: string) => e.startsWith("tag"));
+    const tag = data.data.data.net0
+      .split(",")
+      .find((e: string) => e.startsWith("tag"));
     if (tag) {
       return parseInt(tag.split("=").at(1), 10);
     }
@@ -77,11 +85,13 @@ export class HttpProxmoxRepository {
     return 1;
   }
 
-  async listQemuMachineIps (node: string, vmid: number): Promise<Array<IP>> {
+  async listQemuMachineIps(node: string, vmid: number): Promise<Array<IP>> {
     let data;
     try {
       data = await axios({
-        url: this.computeUrl(`/api2/json/nodes/${node}/qemu/${vmid}/agent/network-get-interfaces`),
+        url: this.computeUrl(
+          `/api2/json/nodes/${node}/qemu/${vmid}/agent/network-get-interfaces`,
+        ),
         headers: await this.prepareHeaders(),
       });
     } catch (err) {
@@ -92,36 +102,40 @@ export class HttpProxmoxRepository {
     type PAYLOAD = {
       result: Array<{
         "hardware-address": string;
-        "ip-addresses": Array<{ "ip-address": IP, "ip-address-type": "ipv4"|"ipv6", prefix: number }>,
+        "ip-addresses": Array<{
+          "ip-address": IP;
+          "ip-address-type": "ipv4" | "ipv6";
+          prefix: number;
+        }>;
         name: string;
         statistics: {
-          "rx-bytes": number,
-          "rx-dropped": number,
-          "rx-errs": number,
-          "rx-packets": number,
-          "tx-bytes": number,
-          "tx-dropped": number,
-          "tx-errs": number,
-          "tx-packets": number,
-        }
-      }>
-    }
+          "rx-bytes": number;
+          "rx-dropped": number;
+          "rx-errs": number;
+          "rx-packets": number;
+          "tx-bytes": number;
+          "tx-dropped": number;
+          "tx-errs": number;
+          "tx-packets": number;
+        };
+      }>;
+    };
 
     const payload = (data as unknown as any)?.data?.data as PAYLOAD;
     console.log(payload);
     const answer = payload.result
-      .map(
-        eth => eth["ip-addresses"]
-          .filter(ip => ip["ip-address-type"] === "ipv4")
-          .map(ip => ip["ip-address"]),
+      .map((eth) =>
+        eth["ip-addresses"]
+          .filter((ip) => ip["ip-address-type"] === "ipv4")
+          .map((ip) => ip["ip-address"]),
       )
       .flat()
-      .filter(ip => !["127.0.0.1"].includes(ip));
+      .filter((ip) => !["127.0.0.1"].includes(ip));
 
     return answer;
   }
 
-  async createQemuMachine (payload: CreateQemuMachinePayload): Promise<string> {
+  async createQemuMachine(payload: CreateQemuMachinePayload): Promise<string> {
     let data;
 
     // According to this answer https://forum.proxmox.com/threads/can-not-create-vm-with-qcow2-format.114881/post-496759
@@ -157,15 +171,20 @@ export class HttpProxmoxRepository {
         url: this.computeUrl(`/api2/json/nodes/${payload.node}/qemu`),
       });
     } catch (err) {
-      this.logger.error({ status: (err as unknown as any).response.status, vmid: payload.vmid, errors: (err as unknown as any).response.data.errors }, (err as unknown as any).response.statusText);
+      this.logger.error(
+        {
+          status: (err as unknown as any).response.status,
+          vmid: payload.vmid,
+          errors: (err as unknown as any).response.data.errors,
+        },
+        (err as unknown as any).response.statusText,
+      );
     }
 
     return (data as unknown as any)?.data?.data as string;
   }
 
-  async listTemplates (
-    payload: { node: string; }
-  ) {
+  async listTemplates(payload: { node: string }) {
     let data;
     try {
       data = await axios({
@@ -174,15 +193,24 @@ export class HttpProxmoxRepository {
         headers: await this.prepareHeaders(),
       });
     } catch (err) {
-      this.logger.error({ status: (err as unknown as any).response.status, ...payload, errors: (err as unknown as any).response.data.errors }, (err as unknown as any).response.statusText);
+      this.logger.error(
+        {
+          status: (err as unknown as any).response.status,
+          ...payload,
+          errors: (err as unknown as any).response.data.errors,
+        },
+        (err as unknown as any).response.statusText,
+      );
     }
 
-    return (data as unknown as any)?.data?.data
-      // @ts-ignore
-      .filter(resource => resource.template === 1);
+    return (
+      (data as unknown as any)?.data?.data
+        // @ts-ignore
+        .filter((resource) => resource.template === 1)
+    );
   }
 
-  async updateQemuMachine (payload: UpdateQemuMachinePayload): Promise<string> {
+  async updateQemuMachine(payload: UpdateQemuMachinePayload): Promise<string> {
     let data;
 
     // @ts-ignore
@@ -215,16 +243,25 @@ export class HttpProxmoxRepository {
         data: proxmoxPayload,
         headers: await this.prepareHeaders(),
         method: "PUT",
-        url: this.computeUrl(`/api2/json/nodes/${payload.node}/qemu/${payload.vmid}/config`),
+        url: this.computeUrl(
+          `/api2/json/nodes/${payload.node}/qemu/${payload.vmid}/config`,
+        ),
       });
     } catch (err) {
-      this.logger.error({ status: (err as unknown as any).response.status, vmid: payload.vmid, errors: (err as unknown as any).response.data.errors }, (err as unknown as any).response.statusText);
+      this.logger.error(
+        {
+          status: (err as unknown as any).response.status,
+          vmid: payload.vmid,
+          errors: (err as unknown as any).response.data.errors,
+        },
+        (err as unknown as any).response.statusText,
+      );
     }
 
     return (data as unknown as any)?.data?.data as string;
   }
 
-  async deleteQemuMachine (port: DeleteQemuMachinePayload): Promise<UPID> {
+  async deleteQemuMachine(port: DeleteQemuMachinePayload): Promise<UPID> {
     let data;
     try {
       data = await axios({
@@ -233,7 +270,14 @@ export class HttpProxmoxRepository {
         url: this.computeUrl(`/api2/json/nodes/${port.node}/qemu/${port.vmid}`),
       });
     } catch (err) {
-      this.logger.error({ status: (err as unknown as any).response.status, vmid: port.vmid, errors: (err as unknown as any).response.data.errors }, (err as unknown as any).response.statusText);
+      this.logger.error(
+        {
+          status: (err as unknown as any).response.status,
+          vmid: port.vmid,
+          errors: (err as unknown as any).response.data.errors,
+        },
+        (err as unknown as any).response.statusText,
+      );
     }
 
     const payload = (data as unknown as any)?.data?.data as UPID;
@@ -241,7 +285,7 @@ export class HttpProxmoxRepository {
     return payload;
   }
 
-  async downloadISOImage (payload: DownloadIsoImagePayload): Promise<string> {
+  async downloadISOImage(payload: DownloadIsoImagePayload): Promise<string> {
     const params = new URLSearchParams({
       url: payload.url,
       content: payload.content,
@@ -253,52 +297,83 @@ export class HttpProxmoxRepository {
       data = await axios({
         headers: await this.prepareHeaders(),
         method: "POST",
-        url: this.computeUrl(`/api2/json/nodes/${payload.node}/storage/${payload.storage}/download-url?${params.toString()}`),
+        url: this.computeUrl(
+          `/api2/json/nodes/${payload.node}/storage/${
+            payload.storage
+          }/download-url?${params.toString()}`,
+        ),
       });
     } catch (err) {
-      this.logger.error({ status: (err as unknown as any).response.status, ...payload, errors: (err as unknown as any).response.data.errors }, (err as unknown as any).response.statusText);
+      this.logger.error(
+        {
+          status: (err as unknown as any).response.status,
+          ...payload,
+          errors: (err as unknown as any).response.data.errors,
+        },
+        (err as unknown as any).response.statusText,
+      );
     }
 
     return (data as unknown as any)?.data?.data as string;
   }
 
-  async startQemuMachine (payload: StartQemuMachinePayload) {
+  async startQemuMachine(payload: StartQemuMachinePayload) {
     let data;
     try {
       data = await axios({
         method: "POST",
-        url: this.computeUrl(`/api2/json/nodes/${payload.node}/qemu/${payload.vmid}/status/start`),
+        url: this.computeUrl(
+          `/api2/json/nodes/${payload.node}/qemu/${payload.vmid}/status/start`,
+        ),
         headers: await this.prepareHeaders(),
       });
     } catch (err) {
-      this.logger.error({ status: (err as unknown as any).response.status, ...payload, errors: (err as unknown as any).response.data.errors }, (err as unknown as any).response.statusText);
+      this.logger.error(
+        {
+          status: (err as unknown as any).response.status,
+          ...payload,
+          errors: (err as unknown as any).response.data.errors,
+        },
+        (err as unknown as any).response.statusText,
+      );
     }
 
     return (data as unknown as any)?.data?.data as string;
   }
 
-  async stopQemuMachine (payload: StopQemuMachinePayload) {
+  async stopQemuMachine(payload: StopQemuMachinePayload) {
     let data;
     try {
       data = await axios({
         method: "POST",
-        url: this.computeUrl(`/api2/json/nodes/${payload.node}/qemu/${payload.vmid}/status/stop`),
+        url: this.computeUrl(
+          `/api2/json/nodes/${payload.node}/qemu/${payload.vmid}/status/stop`,
+        ),
         headers: await this.prepareHeaders(),
       });
     } catch (err) {
-      this.logger.error({ status: (err as unknown as any).response.status, ...payload, errors: (err as unknown as any).response.data.errors }, (err as unknown as any).response.statusText);
+      this.logger.error(
+        {
+          status: (err as unknown as any).response.status,
+          ...payload,
+          errors: (err as unknown as any).response.data.errors,
+        },
+        (err as unknown as any).response.statusText,
+      );
     }
     return (data as unknown as any)?.data?.data as string;
   }
 
-  async cloneQemuMachine (payload: CloneQemuMachinePayload) {
+  async cloneQemuMachine(payload: CloneQemuMachinePayload) {
     let data;
     try {
       data = await axios({
         method: "POST",
-        url: this.computeUrl(`/api2/json/nodes/${payload.node}/qemu/${payload.vmid}/clone`),
+        url: this.computeUrl(
+          `/api2/json/nodes/${payload.node}/qemu/${payload.vmid}/clone`,
+        ),
         headers: {
-          ...await this.prepareHeaders(),
+          ...(await this.prepareHeaders()),
         },
         data: {
           full: 1,
@@ -308,38 +383,58 @@ export class HttpProxmoxRepository {
         },
       });
     } catch (err) {
-      this.logger.error({ status: (err as unknown as any).response.status, ...payload, errors: (err as unknown as any).response.data.errors }, (err as unknown as any).response.statusText);
+      this.logger.error(
+        {
+          status: (err as unknown as any).response.status,
+          ...payload,
+          errors: (err as unknown as any).response.data.errors,
+        },
+        (err as unknown as any).response.statusText,
+      );
     }
 
     return (data as unknown as any)?.data?.data as string;
   }
 
-  async resizeDisk (
-    payload: { node: string; vmid: number, size: number, disk: string, unit: "G" }
-  ) {
+  async resizeDisk(payload: {
+    node: string;
+    vmid: number;
+    size: number;
+    disk: string;
+    unit: "G";
+  }) {
     let data;
     try {
       data = await axios({
         method: "PUT",
-        url: this.computeUrl(`/api2/json/nodes/${payload.node}/qemu/${payload.vmid}/resize`),
+        url: this.computeUrl(
+          `/api2/json/nodes/${payload.node}/qemu/${payload.vmid}/resize`,
+        ),
         headers: await this.prepareHeaders(),
         data: {
           disk: payload.disk,
-          size: `+${payload.size}G`
-        }
+          size: `+${payload.size}G`,
+        },
       });
     } catch (err) {
-      this.logger.error({ status: (err as unknown as any).response.status, ...payload, errors: (err as unknown as any).response.data.errors }, (err as unknown as any).response.statusText);
+      this.logger.error(
+        {
+          status: (err as unknown as any).response.status,
+          ...payload,
+          errors: (err as unknown as any).response.data.errors,
+        },
+        (err as unknown as any).response.statusText,
+      );
     }
 
     return (data as unknown as any)?.data?.data as string;
   }
 
-  private computeUrl (path: string) {
+  private computeUrl(path: string) {
     return `${this.parameters.host}${path}`;
   }
 
-  private async prepareHeaders () {
+  private async prepareHeaders() {
     const ticket = await this.getTicket();
     return {
       CSRFPreventionToken: ticket.CSRFPreventionToken,
@@ -347,12 +442,12 @@ export class HttpProxmoxRepository {
     };
   }
 
-  private async getTicket (): Promise<{
+  private async getTicket(): Promise<{
     CSRFPreventionToken: string;
     cap: {
       dc: any;
       nodes: any;
-    },
+    };
     ticket: string;
     username: string;
   }> {
@@ -363,7 +458,9 @@ export class HttpProxmoxRepository {
 
     let data;
     try {
-      const url = this.computeUrl(`/api2/json/access/ticket?${params.toString()}`);
+      const url = this.computeUrl(
+        `/api2/json/access/ticket?${params.toString()}`,
+      );
       ({ data } = await axios({
         url,
         method: "POST",
