@@ -3,7 +3,7 @@ name: publish-latest
 on:
   push:
     branches:
-      - masters
+      - master
 
 
 jobs:
