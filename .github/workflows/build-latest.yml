@@ -1,0 +1,8 @@
+name: build-latest
+
+on:
+  push:
+    branches:
+      - masters
+
+jobs:

@@ -1,0 +1,8 @@
+name: build-next
+
+on:
+  push:
+    branches:
+      - feature/**
+
+jobs:
