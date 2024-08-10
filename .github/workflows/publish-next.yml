@@ -5,25 +5,57 @@ on:
     branches:
       - feature/**
 
+
 jobs:
+  run-lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          registry-url: 'https://registry.npmjs.org'
+          cache: 'yarn'
+      - name: Run linters
+        run: yarn lint
+      #  For later use 
+      # - name: Test
+      #   run: yarn test
+  prettier:
+    name: Prettier
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          registry-url: 'https://registry.npmjs.org'
+          cache: 'yarn'
+      - name: Install dependencies
+        run: yarn --prefer-offline
+      - name: Run Prettier
+        run: yarn run format
   build:
+    name: Build && Publish
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: '20.x'
           registry-url: 'https://registry.npmjs.org'
+          cache: 'yarn'
       - name: Run install
-        uses: borales/actions-yarn@v4
-        with:
-          cmd: install # will run `yarn install` command
-      - name: Build production bundle
-        uses: borales/actions-yarn@v4
-        with:
-          cmd: build:prod # will run `yarn build:prod` command
+        run: yarn install
+      - name: Run Build
+        run: yarn run build 
       - name: Publish package on NPM 📦
         run: npm publish
         env:
