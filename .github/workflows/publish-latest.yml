@@ -39,7 +39,7 @@ jobs:
       - name: Install dependencies
         run: yarn --prefer-offline
       - name: Run Prettier
-        run: yarn run format
+        run: yarn prettier . --check
   build:
     name: Build && Publish
     runs-on: ubuntu-latest
