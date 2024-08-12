@@ -3,7 +3,7 @@ name: publish-latest
 on:
   push:
     branches:
-      - feature*
+      - feature**
 env:
   BRANCH_NAME: ${{ github.ref_name }}
 
