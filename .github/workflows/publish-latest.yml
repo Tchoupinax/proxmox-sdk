@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - master
+env:
+ BRANCH_NAME: ${{ github.ref_name }}
+ COMMIT: ${{ github.sha }}
 
 jobs:
   run-lint:
@@ -34,6 +37,12 @@ jobs:
           node-version: "20.x"
           registry-url: "https://registry.npmjs.org"
           cache: "yarn"
+      - name: Set name
+        run: echo "APP_NAME=$(npm pkg get name)" >> $GITHUB_ENV
+      - name: Test
+        run: echo ${{ env.APP_NAME }}
+      - name: Test Version
+        run: echo ${{ env.APP_NAME }}-${{ env.BRANCH_NAME }}-${{ env.COMMIT }}
       - name: Run install
         run: yarn install
       - name: Run Build
