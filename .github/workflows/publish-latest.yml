@@ -6,7 +6,7 @@ on:
       - master
 env:
  BRANCH_NAME: ${{ github.ref_name }}
- COMMIT: ${{ github.sha }}
+ # COMMIT: ${{ github.sha }}
 
 jobs:
   run-lint:
@@ -39,6 +39,8 @@ jobs:
           cache: "yarn"
       - name: Set name
         run: echo "APP_NAME=$(npm pkg get name)" >> $GITHUB_ENV
+      - name: Set Commit
+        run: echo "COMMIT=$(echo ${GITHUB_SHA} | cut -c1-7)" >> $GITHUB_ENV
       - name: Test
         run: echo ${{ env.APP_NAME }}
       - name: Test Version
