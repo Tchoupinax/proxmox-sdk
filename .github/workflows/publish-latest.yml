@@ -11,7 +11,8 @@ jobs:
     name: Lint
     runs-on: ubuntu-latest
     steps:
-
+      - name: Check out Git repository
+        uses: actions/checkout@v4
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
@@ -20,8 +21,6 @@ jobs:
           cache: 'yarn'
       - name: Run install
         run: yarn install -g eslint
-      - name: Check out Git repository
-        uses: actions/checkout@v4
       # - name: Run linters
       #   run: yarn lint
       #  For later use 
