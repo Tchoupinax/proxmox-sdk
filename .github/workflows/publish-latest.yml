@@ -34,7 +34,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: "20.x"
+          node-version: "22.x"
           registry-url: "https://registry.npmjs.org"
           cache: "yarn"
       - name: Set app version
@@ -54,6 +54,6 @@ jobs:
       - name: Set Version
         run: npm version ${{ env.APP_VERSION }}-${{ env.BRANCH_NAME }}-${{ env.COMMIT }}
       - name: Publish package on NPM 📦
-        run: npm publish
+        run: npm publish --provenance
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
