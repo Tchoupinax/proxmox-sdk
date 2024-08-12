@@ -52,5 +52,5 @@ jobs:
         run: npm version ${{ env.APP_VERSION }}-${{ env.BRANCH_NAME }}-${{ env.COMMIT }}
       - name: Publish package on NPM 📦
         run: npm publish 
-        env:
+        # env:
           # NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
