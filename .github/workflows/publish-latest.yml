@@ -5,7 +5,6 @@ on:
     branches:
       - master
 
-
 jobs:
   run-lint:
     name: Lint
@@ -16,13 +15,13 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
-          registry-url: 'https://registry.npmjs.org'
-          cache: 'yarn'
+          node-version: "20.x"
+          registry-url: "https://registry.npmjs.org"
+          cache: "yarn"
       - name: Install dependencies
         run: yarn --prefer-offline
       - name: Run linters
-        run: yarn lint && lint:fix
+        run: yarn lint:fix
   build:
     name: Build && Publish
     runs-on: ubuntu-latest
@@ -32,13 +31,13 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
-          registry-url: 'https://registry.npmjs.org'
-          cache: 'yarn'
+          node-version: "20.x"
+          registry-url: "https://registry.npmjs.org"
+          cache: "yarn"
       - name: Run install
         run: yarn install
       - name: Run Build
-        run: yarn run build 
+        run: yarn run build
       - name: Publish package on NPM 📦
         run: npm publish
         env:
