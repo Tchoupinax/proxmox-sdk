@@ -1,4 +1,4 @@
-name: publish-next
+name: publish-tag
 
 on:
   push:
