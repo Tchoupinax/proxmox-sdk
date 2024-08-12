@@ -19,6 +19,8 @@ jobs:
           node-version: '20.x'
           registry-url: 'https://registry.npmjs.org'
           cache: 'yarn'
+      - name: Run install
+        run: yarn install
       - name: Run linters
         run: yarn lint
       #  For later use 
