@@ -19,31 +19,10 @@ jobs:
           node-version: '20.x'
           registry-url: 'https://registry.npmjs.org'
           cache: 'yarn'
-      # - name: Run install
-      #   run: yarn global add eslint && yarn global add eslint-plugin-perfectionist
       - name: Install dependencies
         run: yarn --prefer-offline
       - name: Run linters
-        run: yarn lint
-      #  For later use 
-      # - name: Test
-      #   run: yarn test
-  # prettier:
-  #   name: Prettier
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Check out Git repository
-  #       uses: actions/checkout@v4
-  #     - name: Set up Node.js
-  #       uses: actions/setup-node@v4
-  #       with:
-  #         node-version: '20.x'
-  #         registry-url: 'https://registry.npmjs.org'
-  #         cache: 'yarn'
-  #     - name: Install dependencies
-  #       run: yarn --prefer-offline
-  #     - name: Run Prettier
-  #       run: yarn prettier . --check
+        run: yarn lint && lint:fix
   build:
     name: Build && Publish
     runs-on: ubuntu-latest
