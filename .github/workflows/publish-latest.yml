@@ -41,8 +41,6 @@ jobs:
         run: echo "APP_VERSION=$(npm pkg get version  | sed 's/"//g')" >> $GITHUB_ENV
       - name: Set Commit
         run: echo "COMMIT=$(echo ${GITHUB_SHA} | cut -c1-4)" >> $GITHUB_ENV
-      - name: Test
-        run: echo ${{ env.APP_NAME }}
       - name: Test Version total
         run: echo ${{ env.APP_VERSION }}-${{ env.BRANCH_NAME }}-${{ env.COMMIT }}
       - name: Run install
