@@ -38,15 +38,15 @@ jobs:
           registry-url: "https://registry.npmjs.org"
           cache: "yarn"
       - name: Set name
-        run: echo "APP_NAME=$(npm pkg get name)" >> $GITHUB_ENV
+        run: echo "APP_NAME=$(npm pkg get name  | sed 's/"//g')" >> $GITHUB_ENV
       - name: Set app version
-        run: echo "APP_VERSION=$(npm pkg get version)" >> $GITHUB_ENV
+        run: echo "APP_VERSION=$(npm pkg get version  | sed 's/"//g')" >> $GITHUB_ENV
       - name: Set Commit
         run: echo "COMMIT=$(echo ${GITHUB_SHA} | cut -c1-7)" >> $GITHUB_ENV
       - name: Test
         run: echo ${{ env.APP_NAME }}
       - name: Test Version total
-        run: echo ${{ env.APP_NAME }}@${{ env.APP_VERSION }}_${{ env.BRANCH_NAME }}-${{ env.COMMIT }}
+        run: echo ${{ env.APP_NAME }}@${{ env.APP_VERSION }}-${{ env.BRANCH_NAME }}-${{ env.COMMIT }}
       - name: Run install
         run: yarn install
       - name: Run Build
