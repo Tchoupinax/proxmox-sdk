@@ -58,6 +58,6 @@ jobs:
       - name: Set Version
         run: npm version ${{ env.APP_VERSION }}-${{ env.BRANCH_NAME }}-${{ env.COMMIT }}
       - name: Publish package on NPM 📦
-        run: npm publish --provenance
+        run: npm publish --provenance --tag next
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
