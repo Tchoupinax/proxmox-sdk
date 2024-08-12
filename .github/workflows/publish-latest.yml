@@ -20,7 +20,7 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
           cache: 'yarn'
       - name: Run install
-        run: yarn global add eslint
+        run: yarn global add eslint && yarn global add eslint-plugin-perfectionist
       - name: Run linters
         run: yarn lint
       #  For later use 
