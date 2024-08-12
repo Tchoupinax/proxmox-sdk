@@ -44,7 +44,7 @@ jobs:
   #       run: yarn --prefer-offline
   #     - name: Run Prettier
   #       run: yarn prettier . --check
-  # build:
+  build:
     name: Build && Publish
     runs-on: ubuntu-latest
     steps:
