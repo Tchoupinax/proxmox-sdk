@@ -24,9 +24,13 @@ jobs:
         run: yarn --prefer-offline
       - name: Run linters
         run: yarn lint
+
   build:
     name: Build && Publish
     runs-on: ubuntu-latest
+    permissions:
+      # https://docs.github.com/en/actions/security-for-github-actions/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services#adding-permissions-settings
+      id-token: write
     needs: run-lint
     steps:
       - name: Checkout
