@@ -35,6 +35,6 @@
   },
   "dependencies": {
     "axios": "1.7.9",
-    "nestjs-pino": "4.3.0"
+    "nestjs-pino": "4.3.1"
   }
 }
