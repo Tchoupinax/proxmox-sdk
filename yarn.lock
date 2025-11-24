@@ -787,10 +787,10 @@ natural-compare@^1.4.0:
   resolved "https://registry.yarnpkg.com/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
   integrity sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==
 
-nestjs-pino@4.4.1:
-  version "4.4.1"
-  resolved "https://registry.yarnpkg.com/nestjs-pino/-/nestjs-pino-4.4.1.tgz#648a6a34fa0f283d06e660b4551aadb185bde2a0"
-  integrity sha512-/E/JOtsUf/yHFGJx+zxBfwjCn1uJVV9AxSyx/mD0oNFCP+psvv9XE7WGh5Cebo6TwukF4qEu37eissGErVwLVg==
+nestjs-pino@4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/nestjs-pino/-/nestjs-pino-4.5.0.tgz#c07c71d8a9a3aa73b6e23cae3f426c463df4b7e5"
+  integrity sha512-e54ChJMACSGF8gPYaHsuD07RW7l/OVoV6aI8Hqhpp0ZQ4WA8QY3eewL42JX7Z1U6rV7byNU7bGBV9l6d9V6PDQ==
 
 optionator@^0.9.3:
   version "0.9.4"
