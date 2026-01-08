@@ -349,9 +349,9 @@ escape-string-regexp@^4.0.0:
   integrity sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==
 
 eslint-plugin-perfectionist@^5.0.0:
-  version "5.3.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-perfectionist/-/eslint-plugin-perfectionist-5.3.0.tgz#9e1564401a01ba265081732704c877d8727401f1"
-  integrity sha512-Y3qYps6MpFrwyR+6DGd479GrgEA2PmCNWJ10Q6LnnfQfJTTtb0DNaKOjF5TAQc4wz/9mHwA8lx9ruR5EdFcylA==
+  version "5.3.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-perfectionist/-/eslint-plugin-perfectionist-5.3.1.tgz#f5003eb5d5163c8db059f80e827531ea199aea61"
+  integrity sha512-v8kAP8TarQYqDC4kxr343ZNi++/oOlBnmWovsUZpbJ7A/pq1VHGlgsf/fDh4CdEvEstzkrc8NLvoVKtfpsC4oA==
   dependencies:
     "@typescript-eslint/utils" "^8.52.0"
     natural-orderby "^5.0.0"
