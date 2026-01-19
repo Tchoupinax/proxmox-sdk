@@ -46,7 +46,7 @@ jobs:
       - name: Set Commit
         run: echo "COMMIT=$(echo ${GITHUB_SHA} | cut -c1-4)" >> $GITHUB_ENV
       - name: Test Version total
-        run: echo ${{ env.APP_VERSION }}-${{ env.BRANCH_NAME }}-${{ env.COMMIT }}
+        run: echo ${{ env.APP_VERSION }}-${{ env.COMMIT }}
       - name: Run install
         run: yarn install
       - name: Git User
@@ -56,7 +56,7 @@ jobs:
       - name: Run Build
         run: yarn run build
       - name: Set Version
-        run: npm version ${{ env.APP_VERSION }}-${{ env.BRANCH_NAME }}-${{ env.COMMIT }}
+        run: npm version ${{ env.APP_VERSION }}-${{ env.COMMIT }}
       - name: Publish package on NPM 📦
         run: npm publish --provenance --tag next
         env:
