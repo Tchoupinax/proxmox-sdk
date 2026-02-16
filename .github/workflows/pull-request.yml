@@ -40,7 +40,9 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       # https://docs.github.com/en/actions/security-for-github-actions/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services#adding-permissions-settings
-      id-token: write
+      # https://docs.npmjs.com/trusted-publishers#supported-cicd-providers
+      id-token: write  # Required for OIDC
+      contents: read
 
     steps:
       - name: Checkout
@@ -78,6 +80,6 @@ jobs:
         run: npm version ${{ env.APP_VERSION }}-${{ env.COMMIT }}
 
       - name: Publish package on NPM 📦
-        run: npm publish --provenance --tag next
+        run: npm publish --tag next
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
