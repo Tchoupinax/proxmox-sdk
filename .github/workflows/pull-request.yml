@@ -1,62 +1,82 @@
-name: publish-latest
+name: Pull request checks 🔎
 
 on:
-  push:
-    branches:
-      - feature/**
+  pull_request:
+
 env:
   BRANCH_NAME: ${{ github.ref_name }}
 
 jobs:
-  run-lint:
-    name: Lint
+  lint:
+    name: Check code quality 🫆
     runs-on: ubuntu-latest
     steps:
-      - name: Check out Git repository
-        uses: actions/checkout@v6
-      - name: Set up Node.js
-        uses: actions/setup-node@v6
+      - name: Check code quality 🫆
+        uses: tchoupinax/repo-config/shared-actions/steps/node/lint@712d3299a210dced64a5abe4e65809386e8d9ba0
         with:
-          node-version: "24.x"
-          registry-url: "https://registry.npmjs.org"
-          cache: "yarn"
-      - name: Install dependencies
-        run: yarn --prefer-offline
-      - name: Run linters
-        run: yarn lint
+          throwOnError: "false"
 
   build:
-    name: Build && Publish
+    name: Check build success 🦫
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check build success 🦫
+        uses: tchoupinax/repo-config/shared-actions/steps/node/build@v0
+        with:
+          nodeVersion: 24
+
+  labels:
+    name: Autodetect labels 🔍
+    runs-on: ubuntu-latest
+    steps:
+      - name: Autodetect labels 🔍
+        uses: tchoupinax/repo-config/shared-actions/steps/dx/automatically-apply-labels@v0
+        with:
+          appId: ${{ secrets.DEPLOY_APP_ID }}
+          privateKey: ${{ secrets.DEPLOY_APP_KEY }}
+
+  publication:
+    name: Publish
     runs-on: ubuntu-latest
     permissions:
       # https://docs.github.com/en/actions/security-for-github-actions/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services#adding-permissions-settings
       id-token: write
-    needs: run-lint
+
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
           node-version: "24.x"
           registry-url: "https://registry.npmjs.org"
           cache: "yarn"
+
       - name: Set app version
         run: echo "APP_VERSION=$(npm pkg get version  | sed 's/"//g')" >> $GITHUB_ENV
+
       - name: Set Commit
         run: echo "COMMIT=$(echo ${GITHUB_SHA} | cut -c1-4)" >> $GITHUB_ENV
+
       - name: Test Version total
         run: echo ${{ env.APP_VERSION }}-${{ env.COMMIT }}
+
       - name: Run install
         run: yarn install
+
       - name: Git User
         run: git config --global user.name "Bot"
+
       - name: Git email
         run: git config --global user.email "proxmox-sdk-bot@fake.com"
+
       - name: Run Build
         run: yarn run build
+
       - name: Set Version
         run: npm version ${{ env.APP_VERSION }}-${{ env.COMMIT }}
+
       - name: Publish package on NPM 📦
         run: npm publish --provenance --tag next
         env:
