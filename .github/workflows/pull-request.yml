@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check code quality 🫆
-        uses: tchoupinax/repo-config/shared-actions/steps/node/lint@712d3299a210dced64a5abe4e65809386e8d9ba0
+        uses: tchoupinax/repo-config/shared-actions/steps/node/lint@45959d6cebca4b5486453f0274fbccc8cdcc32bd
         with:
           throwOnError: "false"
 
