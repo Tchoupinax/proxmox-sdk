@@ -1,11 +1,3 @@
-import perfectionist from "eslint-plugin-perfectionist";
+import { eslintTypescript } from "eslint-config-tchoupinax";
 
-export default {
-  plugins: {
-    perfectionist,
-  },
-  rules: {
-    "@typescript-eslint/no-invalid-void-type": "off",
-    "perfectionist/sort-imports": "error",
-  },
-};
+export default eslintTypescript;

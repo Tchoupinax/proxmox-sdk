@@ -2,6 +2,7 @@ import axios from "axios";
 import { Logger } from "nestjs-pino";
 
 import { encodeSSHKey } from "./tools/encode-ssh-key";
+import { UPID } from "./types";
 import { CloneQemuMachinePayload } from "./types/clone-qemu-machine";
 import {
   CreateQemuMachinePayload,
@@ -9,6 +10,7 @@ import {
 } from "./types/create-qemu-machine";
 import { DeleteQemuMachinePayload } from "./types/delete-qemu-machine";
 import { DownloadIsoImagePayload } from "./types/download-iso-image";
+import { IP } from "./types/ip";
 import { ListQemuMachinesAnswer } from "./types/list-qemu-machines";
 import { StartQemuMachinePayload } from "./types/start-qemu-machine";
 import { StopQemuMachinePayload } from "./types/stop-qemu-machine";
@@ -16,8 +18,6 @@ import {
   UpdateQemuMachinePayload,
   UpdateQemuMachineProxmoxPayload,
 } from "./types/update-qemu-machine";
-import { IP } from "./types/ip";
-import { UPID } from "./types";
 
 export type AuthConfig = {
   host: string;
@@ -124,13 +124,13 @@ export class HttpProxmoxRepository {
     const payload = (data as unknown as any)?.data?.data as PAYLOAD;
     console.log(payload);
     const answer = payload.result
-      .map((eth) =>
+      .map(eth =>
         eth["ip-addresses"]
-          .filter((ip) => ip["ip-address-type"] === "ipv4")
-          .map((ip) => ip["ip-address"]),
+          .filter(ip => ip["ip-address-type"] === "ipv4")
+          .map(ip => ip["ip-address"]),
       )
       .flat()
-      .filter((ip) => !["127.0.0.1"].includes(ip));
+      .filter(ip => !["127.0.0.1"].includes(ip));
 
     return answer;
   }
@@ -173,11 +173,11 @@ export class HttpProxmoxRepository {
     } catch (err) {
       this.logger.error(
         {
-          status: (err as unknown as any).response.status,
+          status: (err as any).response.status,
           vmid: payload.vmid,
-          errors: (err as unknown as any).response.data.errors,
+          errors: (err as any).response.data.errors,
         },
-        (err as unknown as any).response.statusText,
+        (err as any).response.statusText,
       );
     }
 
@@ -195,18 +195,18 @@ export class HttpProxmoxRepository {
     } catch (err) {
       this.logger.error(
         {
-          status: (err as unknown as any).response.status,
+          status: (err as any).response.status,
           ...payload,
-          errors: (err as unknown as any).response.data.errors,
+          errors: (err as any).response.data.errors,
         },
-        (err as unknown as any).response.statusText,
+        (err as any).response.statusText,
       );
     }
 
     return (
       (data as unknown as any)?.data?.data
         // @ts-ignore
-        .filter((resource) => resource.template === 1)
+        .filter(resource => resource.template === 1)
     );
   }
 
@@ -250,11 +250,11 @@ export class HttpProxmoxRepository {
     } catch (err) {
       this.logger.error(
         {
-          status: (err as unknown as any).response.status,
+          status: (err as any).response.status,
           vmid: payload.vmid,
-          errors: (err as unknown as any).response.data.errors,
+          errors: (err as any).response.data.errors,
         },
-        (err as unknown as any).response.statusText,
+        (err as any).response.statusText,
       );
     }
 
@@ -272,11 +272,11 @@ export class HttpProxmoxRepository {
     } catch (err) {
       this.logger.error(
         {
-          status: (err as unknown as any).response.status,
+          status: (err as any).response.status,
           vmid: port.vmid,
-          errors: (err as unknown as any).response.data.errors,
+          errors: (err as any).response.data.errors,
         },
-        (err as unknown as any).response.statusText,
+        (err as any).response.statusText,
       );
     }
 
@@ -306,11 +306,11 @@ export class HttpProxmoxRepository {
     } catch (err) {
       this.logger.error(
         {
-          status: (err as unknown as any).response.status,
+          status: (err as any).response.status,
           ...payload,
-          errors: (err as unknown as any).response.data.errors,
+          errors: (err as any).response.data.errors,
         },
-        (err as unknown as any).response.statusText,
+        (err as any).response.statusText,
       );
     }
 
@@ -330,11 +330,11 @@ export class HttpProxmoxRepository {
     } catch (err) {
       this.logger.error(
         {
-          status: (err as unknown as any).response.status,
+          status: (err as any).response.status,
           ...payload,
-          errors: (err as unknown as any).response.data.errors,
+          errors: (err as any).response.data.errors,
         },
-        (err as unknown as any).response.statusText,
+        (err as any).response.statusText,
       );
     }
 
@@ -354,11 +354,11 @@ export class HttpProxmoxRepository {
     } catch (err) {
       this.logger.error(
         {
-          status: (err as unknown as any).response.status,
+          status: (err as any).response.status,
           ...payload,
-          errors: (err as unknown as any).response.data.errors,
+          errors: (err as any).response.data.errors,
         },
-        (err as unknown as any).response.statusText,
+        (err as any).response.statusText,
       );
     }
     return (data as unknown as any)?.data?.data as string;
@@ -385,11 +385,11 @@ export class HttpProxmoxRepository {
     } catch (err) {
       this.logger.error(
         {
-          status: (err as unknown as any).response.status,
+          status: (err as any).response.status,
           ...payload,
-          errors: (err as unknown as any).response.data.errors,
+          errors: (err as any).response.data.errors,
         },
-        (err as unknown as any).response.statusText,
+        (err as any).response.statusText,
       );
     }
 
@@ -419,11 +419,11 @@ export class HttpProxmoxRepository {
     } catch (err) {
       this.logger.error(
         {
-          status: (err as unknown as any).response.status,
+          status: (err as any).response.status,
           ...payload,
-          errors: (err as unknown as any).response.data.errors,
+          errors: (err as any).response.data.errors,
         },
-        (err as unknown as any).response.statusText,
+        (err as any).response.statusText,
       );
     }
 
@@ -469,8 +469,8 @@ export class HttpProxmoxRepository {
         },
       }));
     } catch (err) {
-      console.log((err as unknown as any).response.status);
-      console.log((err as unknown as any).response.statusText);
+      console.log((err as any).response.status);
+      console.log((err as any).response.statusText);
     }
 
     return (data as unknown as any).data;

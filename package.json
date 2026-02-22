@@ -20,19 +20,16 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "lint": "yarn lint:eslint && yarn lint:prettier",
-    "lint:eslint": "eslint .",
-    "lint:fix": "yarn lint:eslint --fix && prettier --write .",
-    "lint:inspect": "npx @eslint/config-inspector@latest",
-    "lint:prettier": "prettier . --check"
+    "lint": "eslint --fix ."
   },
   "dependencies": {
     "axios": "1.13.5",
     "nestjs-pino": "4.6.0"
   },
   "devDependencies": {
-    "@types/node": "24.10.13",
+    "@types/node": "25.3.0",
     "eslint": "10.0.1",
+    "eslint-config-tchoupinax": "2.0.5",
     "eslint-plugin-perfectionist": "5.6.0",
     "prettier": "3.8.1",
     "typescript": "5.9.3"
