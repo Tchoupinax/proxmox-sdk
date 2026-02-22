@@ -105,10 +105,10 @@ export class HttpProxmoxRepository {
         "ip-addresses": Array<{
           "ip-address": IP;
           "ip-address-type": "ipv4" | "ipv6";
-          "prefix": number;
+          prefix: number;
         }>;
-        "name": string;
-        "statistics": {
+        name: string;
+        statistics: {
           "rx-bytes": number;
           "rx-dropped": number;
           "rx-errs": number;
