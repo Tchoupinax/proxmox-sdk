@@ -22,8 +22,8 @@ importers:
         specifier: 10.0.1
         version: 10.0.1
       eslint-config-tchoupinax:
-        specifier: 2.0.5
-        version: 2.0.5(@eslint/markdown@7.5.1)(@typescript-eslint/utils@8.56.0(eslint@10.0.1)(typescript@5.9.3))(eslint-import-resolver-node@0.3.9)(typescript@5.9.3)
+        specifier: 2.1.0
+        version: 2.1.0(@eslint/markdown@7.5.1)(@typescript-eslint/utils@8.56.0(eslint@10.0.1)(typescript@5.9.3))(eslint-import-resolver-node@0.3.9)(typescript@5.9.3)
       eslint-plugin-perfectionist:
         specifier: 5.6.0
         version: 5.6.0(eslint@10.0.1)(typescript@5.9.3)
@@ -558,8 +558,8 @@ packages:
     peerDependencies:
       eslint: '>=7.0.0'
 
-  eslint-config-tchoupinax@2.0.5:
-    resolution: {integrity: sha512-OBGlDdgD6STT4aTnPILv6MOep4RlvU82Ccl1/S/UGgyflAsrJvW/Yccv1YP3y4EY2FFKGpNqq4YY/PAfhhYKlQ==}
+  eslint-config-tchoupinax@2.1.0:
+    resolution: {integrity: sha512-HOzwKGejuZqtYAQY0Vq166IWtmQlwRMB4lVs2xn1GwBgROWNhFwCLsAdx9vVaEalJLJnZF2JLvbH4psxNJGWWQ==}
 
   eslint-import-context@0.1.9:
     resolution: {integrity: sha512-K9Hb+yRaGAGUbwjhFNHvSmmkZs9+zbuoe3kFQ4V1wYjrepUFYM2dZAfNtjbbj3qsPfUfsA68Bx/ICWQMi+C8Eg==}
@@ -2109,7 +2109,7 @@ snapshots:
     dependencies:
       eslint: 10.0.1
 
-  eslint-config-tchoupinax@2.0.5(@eslint/markdown@7.5.1)(@typescript-eslint/utils@8.56.0(eslint@10.0.1)(typescript@5.9.3))(eslint-import-resolver-node@0.3.9)(typescript@5.9.3):
+  eslint-config-tchoupinax@2.1.0(@eslint/markdown@7.5.1)(@typescript-eslint/utils@8.56.0(eslint@10.0.1)(typescript@5.9.3))(eslint-import-resolver-node@0.3.9)(typescript@5.9.3):
     dependencies:
       '@stylistic/eslint-plugin': 5.9.0(eslint@10.0.1)
       '@typescript-eslint/parser': 8.56.0(eslint@10.0.1)(typescript@5.9.3)
