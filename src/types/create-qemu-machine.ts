@@ -141,19 +141,19 @@ export type CreateQemuMachineProxmoxPayload = CreateQemuMachineBasePayload & {
 };
 
 export type OS =
-  | "other"
-  | "wxp"
-  | "w2k"
-  | "w2k3"
-  | "w2k8"
-  | "wvista"
-  | "win7"
-  | "win8"
-  | "win10"
-  | "win11"
-  | "l24"
-  | "l26"
-  | "solaris";
+  | "other" |
+  "wxp" |
+  "w2k" |
+  "w2k3" |
+  "w2k8" |
+  "wvista" |
+  "win7" |
+  "win8" |
+  "win10" |
+  "win11" |
+  "l24" |
+  "l26" |
+  "solaris";
 
 export type QemuNetwork = {
   bridge: "vmbr0";

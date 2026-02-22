@@ -9,18 +9,18 @@ export type DeleteQemuMachinePayload = {
   /**
    * The cluster node name.
    */
-  node: string;
+  "node": string;
   /**
    * Remove VMID from configurations, like backup & replication jobs and HA.
    */
-  purge?: boolean;
+  "purge"?: boolean;
   /**
    * ignore locks - only root is allowed to use this option.
    */
-  skiplock?: boolean;
+  "skiplock"?: boolean;
   /**
    * The (unique) ID of the VM.
    * It should be between 100 and 999999999.
    */
-  vmid: number;
+  "vmid": number;
 };
