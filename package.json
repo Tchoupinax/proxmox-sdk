@@ -32,7 +32,7 @@
     "eslint-config-tchoupinax": "2.6.0",
     "eslint-plugin-perfectionist": "5.10.0",
     "prettier": "3.9.5",
-    "typescript": "6.0.3"
+    "typescript": "7.0.2"
   },
   "packageManager": "pnpm@11.11.0"
 }
