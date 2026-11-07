@@ -23,16 +23,16 @@
     "lint": "eslint --fix ."
   },
   "dependencies": {
-    "axios": "1.20.0",
+    "axios": "1.21.0",
     "nestjs-pino": "4.6.1"
   },
   "devDependencies": {
     "@types/node": "25.9.9",
-    "eslint": "10.13.0",
+    "eslint": "10.14.0",
     "eslint-config-tchoupinax": "2.6.1",
     "eslint-plugin-perfectionist": "5.13.0",
     "prettier": "3.9.10",
     "typescript": "6.0.3"
   },
-  "packageManager": "pnpm@12.14.0"
+  "packageManager": "pnpm@12.17.0"
 }
