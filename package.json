@@ -27,12 +27,12 @@
     "nestjs-pino": "4.6.1"
   },
   "devDependencies": {
-    "@types/node": "25.9.9",
-    "eslint": "10.14.0",
+    "@types/node": "25.9.12",
+    "eslint": "10.15.0",
     "eslint-config-tchoupinax": "2.6.1",
-    "eslint-plugin-perfectionist": "5.13.0",
-    "prettier": "3.9.10",
+    "eslint-plugin-perfectionist": "5.14.0",
+    "prettier": "3.10.1",
     "typescript": "6.0.3"
   },
-  "packageManager": "pnpm@12.18.0"
+  "packageManager": "pnpm@12.23.0"
 }
